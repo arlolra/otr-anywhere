@@ -14,6 +14,12 @@ A browser plugin that uses the [OTR.js](https://github.com/arlolra/otr) library 
 
 At the moment, just Chromium.
 
+#####Donate
+
+These codes aren't going to write themselves.
+
+Bitcoins: 1ET1yTvQJPZY8twkSkvvCcZkBjiDaumyjm
+
 #####License
 
 MPL v2.0
