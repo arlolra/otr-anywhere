@@ -1,0 +1,27 @@
+{
+  "name": "otr-anywhere",
+  "version": "0.0.0",
+  "description": "Use Off-the-Record (OTR) Messaging Anywhere.",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:arlolra/otr-anywhere.git"
+  },
+  "keywords": [
+    "otr",
+    "messaging",
+    "anywhere"
+  ],
+  "author": "Arlo Breault",
+  "license": "MPL v2.0",
+  "readmeFilename": "readme.md",
+  "bugs": {
+    "url": "https://github.com/arlolra/otr-anywhere/issues"
+  },
+  "devDependencies": {
+    "mocha": "1.11.x",
+    "jshint": "2.1.x"
+  }
+}

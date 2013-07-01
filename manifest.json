@@ -1,0 +1,19 @@
+{
+  "name": "otr-anywhere",
+  "version": "0.0.0",
+  "manifest_version": 2,
+  "description": "Use Off-the-Record (OTR) Messaging Anywhere.",
+  "background": {
+    "page": "src/otr.html"
+  },
+  "browser_action": {
+    "default_popup": "src/msg.html"
+  },
+  "content_scripts": [{
+    "matches": ["https://mail.google.com/mail/*"],
+    "js": [
+      "src/js/gmail.js"
+    ],
+    "run_at": "document_idle"
+  }]
+}

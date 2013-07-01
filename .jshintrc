@@ -1,0 +1,11 @@
+{
+  "browser": true,
+  "node": true,
+  "undef": true,
+  "globals": {
+    "it": true,
+    "describe": true,
+    "requirejs": true,
+    "define": true
+  }
+}
