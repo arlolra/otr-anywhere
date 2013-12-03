@@ -7,47 +7,34 @@
   requirejs.config({
     baseUrl: "components",
     paths: {
-      "underscore": "underscore-amd/underscore"
+      "underscore": "underscore-amd/underscore",
+      "backbone": "backbone-amd/backbone",
+      "conversation": "../js/conversation",
+      "bigint": "otr/build/dep/bigint",
+      "crypto": "otr/build/dep/crypto",
+      "eventemitter": "otr/build/dep/eventemitter",
+      "salsa20": "otr/build/dep/salsa20",
+      "otr": "otr/build/otr"
     }
   });
 
   // load deps
   requirejs([
-    "otr/build/otr",
-    "backbone-amd/backbone"
-  ], function (otr, Backbone) {
+    "otr",
+    "backbone",
+    "conversation"
+  ], function (otr, Backbone, Conversations) {
 
     // some setup
 
     Backbone.sync = function () {
+      console.log(arguments)
       return false;
-    }
-    
+    };
+
     var myKey = new otr.DSA();
 
-    // models
-
-    var Conversation = Backbone.Model.extend({
-      defaults: {
-        otrOptions: {
-          debug: false,
-          fragment_size: 140,
-          send_interval: 200
-        }
-      },
-      initialize: function () {
-        if (this.has("otrKey")) {
-          this.get("otrOptions").priv = this.get("otrKey");
-          this.unset("otrKey");
-        }
-        this.set("otr", new otr.OTR(this.get("otrOptions")));
-        this.get("otr").REQUIRE_ENCRYPTION = true;
-        this.unset("otrOptions");
-      },
-      clear: function () {
-        this.destroy();
-      }
-    });
+    // service model
 
     var Service = Backbone.Model.extend({
       initialize: function () {
@@ -61,34 +48,50 @@
       }
     });
 
-    // collections
+    // events handlers
 
-    var Conversations = Backbone.Collection.extend({
-      model: Conversation
-    });
+    function gmailHandler(msg) {
+      switch (msg.type) {
+        case "conversation": {
+          service.addConversation(msg.id, myKey);
+          break;
+        }
+        default: {
+          // throw it on the floor
+        }
+      }
+    }
+
+    function msgHandler(msg) {
+      switch (msg.type) {
+        case "conversation": {
+          service.addConversation(msg.id, myKey);
+          break;
+        }
+        default: {
+          // throw it on the floor
+        }
+      }
+    }
 
     // run
 
-    chrome.runtime.onConnect.addListener(function (port) {
-
-      console.assert(port.name == "gmail");
-      window.service = new Service({ name: port.name });
-      
-      port.onMessage.addListener(function (msg) {
-        switch (msg.type) {
-          
-          case "conversation": {
-            service.addConversation(msg.id, myKey);
-          }
-          
-          default: {
-            // throw it on the floor
-          }
-
-        }
-      });
-
-    });
+    // chrome.runtime.onConnect.addListener(function (port) {
+    //   switch (port.name) {
+    //     case "gmail": {
+    //       window.service = new Service({ name: port.name });
+    //       port.onMessage.addListener(gmailHandler.bind(port));
+    //       break;
+    //     }
+    //     case "msg": {
+    //       port.onMessage.addListener(msgHandler.bind(port));
+    //       break;
+    //     }
+    //     default: {
+    //       console.error("Saw a connection from: " + port.name);
+    //     }
+    //   }
+    // });
 
   });
 

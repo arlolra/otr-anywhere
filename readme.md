@@ -18,7 +18,7 @@ At the moment, just Chromium.
 
 These codes aren't going to write themselves.
 
-Bitcoins: 1ET1yTvQJPZY8twkSkvvCcZkBjiDaumyjm
+Bitcoins: 1HQBvDhgUuHAV4nkGPhWzUFxMe1PpHaj8c
 
 #####License
 
